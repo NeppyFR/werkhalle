@@ -1,0 +1,282 @@
+/* Zwilling view. Fork colours are always mixed from the tokens: accent marks everything that is not the live plant. */
+.zwilling { gap: var(--sp-2); }
+.zwilling > * { flex: none; }
+
+/* Mark that tells the variants apart: shape first, colour second */
+.zwilling-mark { flex: none; vertical-align: -1px; overflow: visible; }
+.zwilling-mark--A path { fill: none; stroke: var(--text-2); stroke-width: 1.6; }
+.zwilling-mark--B path { fill: var(--metal); }
+.zwilling-mark--C path { fill: var(--accent); }
+
+/* ---------------------------------------------------------------- framing */
+.zwilling-frame {
+  display: grid;
+  grid-template-columns: minmax(216px, 262px) minmax(0, 1fr) minmax(216px, 262px);
+  background: var(--surface-1);
+  border: 1px solid var(--line-1);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+.zwilling-frame__mode { display: grid; align-content: start; gap: 3px; padding: 7px var(--sp-3) 8px; min-width: 0; }
+.zwilling-frame__mode--twin { background: var(--accent-dim); border-left: 2px solid var(--accent); }
+.zwilling-frame__title { display: flex; align-items: center; gap: 6px; min-height: 22px; font-size: var(--fs-md); font-weight: 600; }
+.zwilling-frame__state { font-size: var(--fs-xs); font-weight: 400; color: var(--text-2); }
+.zwilling-frame__badge { min-height: 20px; }
+.zwilling-frame__text { font-size: var(--fs-sm); color: var(--text-1); line-height: 1.3; }
+.zwilling-frame__fact { font-family: var(--font-mono); font-variant-numeric: tabular-nums; font-size: var(--fs-xs); color: var(--text-2); }
+.zwilling-frame__diagram { min-width: 0; padding: 0 var(--sp-2); align-self: center; border-left: 1px solid var(--line-1); }
+
+.zwilling-fork { display: block; overflow: visible; }
+.zwilling-fork__tick { stroke: var(--line-1); stroke-width: 1; }
+.zwilling-fork__axis { font: 400 10.5px var(--font-ui); fill: var(--text-3); }
+.zwilling-fork__label { font: 400 11px var(--font-mono); fill: var(--text-2); font-variant-numeric: tabular-nums; paint-order: stroke; stroke: var(--surface-1); stroke-width: 3px; stroke-linejoin: round; }
+.zwilling-fork__hint { font: 400 11px var(--font-ui); fill: var(--text-3); }
+.zwilling-fork__future { stroke: var(--line-2); stroke-width: 1; }
+.zwilling-fork__live { stroke: var(--state-run); stroke-width: 2; stroke-linecap: round; }
+.zwilling-fork__now { fill: var(--state-run); stroke: var(--surface-1); stroke-width: 2; }
+.zwilling-fork__fork { fill: var(--surface-1); stroke: var(--accent); stroke-width: 2; }
+.zwilling-fork__path { fill: none; stroke: var(--metal-3); stroke-width: 2; stroke-linecap: round; }
+.zwilling-fork__end { fill: var(--metal-3); stroke: var(--surface-1); stroke-width: 2; }
+.zwilling-fork__branch.is-current .zwilling-fork__path { stroke: var(--accent); }
+.zwilling-fork__branch.is-current .zwilling-fork__end { fill: var(--accent); }
+.zwilling-fork__branch.is-current .zwilling-fork__label { fill: var(--text-1); }
+
+/* ---------------------------------------------------------------- two columns: controls, results */
+.zwilling-work { display: grid; grid-template-columns: 372px minmax(0, 1fr); gap: var(--sp-2); align-items: start; }
+.zwilling-left, .zwilling-results { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--sp-2); min-width: 0; }
+.zwilling-left > .panel, .zwilling-results > .panel { min-height: auto; }
+.zwilling-left .panel__body, .zwilling-results .panel__body { overflow: visible; }
+
+/* Scenario builder */
+.zwilling-presets { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; }
+.zwilling-preset { justify-content: flex-start; }
+.zwilling-preset[aria-pressed="true"] { background: var(--metal); border-color: var(--metal); color: var(--surface-0); font-weight: 600; }
+.zwilling-preset[aria-pressed="true"]:hover:not(:disabled) { background: var(--metal); border-color: var(--metal); }
+.zwilling-items { display: grid; gap: 4px; margin-top: var(--sp-2); }
+.zwilling-item { display: grid; gap: 4px; padding: 5px 6px 6px; background: var(--surface-0); border: 1px solid var(--line-1); border-radius: var(--radius); }
+.zwilling-item.is-invalid { border-color: var(--state-fault); }
+.zwilling-item__head { display: grid; grid-template-columns: 128px minmax(0, 1fr) auto; gap: 4px; align-items: center; }
+.zwilling-item__remove { min-height: 26px; width: 26px; font-size: 15px; color: var(--text-2); }
+.zwilling-item__numbers { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(0, 1fr); gap: 4px; }
+.zwilling-item__summary { font-size: var(--fs-xs); color: var(--text-2); line-height: 1.3; }
+.zwilling-item .input { background: var(--surface-1); }
+.zwilling-add { margin-top: 6px; }
+.zwilling-summary { display: grid; gap: 2px; margin-top: var(--sp-2); font-size: var(--fs-sm); color: var(--text-1); }
+.zwilling-summary__edit { margin-top: 2px; padding-inline: 4px; }
+.zwilling-options { display: flex; flex-wrap: wrap; justify-content: space-between; gap: var(--sp-2); margin-top: var(--sp-2); }
+.zwilling-start { width: 100%; min-height: 34px; margin-top: var(--sp-2); font-size: var(--fs-md); font-weight: 600; }
+.zwilling-start__why { margin-top: 4px; font-size: var(--fs-xs); color: var(--text-3); }
+
+/* Intro */
+.zwilling-intro__lead { font-size: var(--fs-md); color: var(--text-1); margin-bottom: var(--sp-2); }
+.zwilling-intro__cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1px; background: var(--line-1); border: 1px solid var(--line-1); }
+.zwilling-intro__card { display: grid; align-content: start; gap: 4px; padding: var(--sp-2) var(--sp-3); background: var(--surface-1); }
+.zwilling-intro__title { display: flex; align-items: center; gap: 6px; margin: 0; font-size: var(--fs-md); font-weight: 600; }
+.zwilling-intro__text { font-size: var(--fs-sm); color: var(--text-2); }
+
+/* Progress */
+.zwilling-progress { display: grid; grid-template-columns: 190px minmax(0, 1fr); gap: var(--sp-4); }
+.zwilling-progress__time { display: grid; align-content: start; gap: 4px; }
+.zwilling-progress__elapsed { font-size: 34px; font-weight: 600; line-height: 1.05; font-variant-numeric: tabular-nums; }
+.zwilling-progress__label { font-size: var(--fs-xs); color: var(--text-2); }
+.zwilling-progress__line { font-size: var(--fs-sm); color: var(--text-1); min-height: 1.4em; }
+.zwilling-progress__tasks { margin: 4px 0 6px; padding-left: 14px; list-style: disc; font-size: var(--fs-sm); color: var(--text-2); }
+.zwilling-progress__honest { font-size: var(--fs-xs); color: var(--text-3); margin-bottom: 4px; }
+.zwilling-progress__problem { margin-top: 4px; font-size: var(--fs-sm); color: var(--state-setup); }
+.zwilling-failure { display: flex; gap: 6px; align-items: baseline; margin-bottom: var(--sp-2); font-size: var(--fs-md); }
+
+/* ---------------------------------------------------------------- impact */
+.zwilling-impact__top { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: var(--sp-4); padding: var(--sp-2) var(--sp-3) var(--sp-3); border-bottom: 1px solid var(--line-1); }
+.zwilling-hero { display: grid; align-content: start; min-width: 270px; padding-right: var(--sp-4); border-right: 1px solid var(--line-1); }
+.zwilling-hero__pre { font-size: var(--fs-lg); font-weight: 600; color: var(--text-1); }
+.zwilling-hero__figure { font-size: 44px; font-weight: 600; line-height: 1.08; letter-spacing: -.01em; color: var(--text-1); white-space: nowrap; }
+.zwilling-hero__post { font-size: var(--fs-md); color: var(--text-1); }
+.zwilling-hero__compare { margin-top: 3px; font-size: var(--fs-xs); color: var(--text-3); }
+.zwilling-impact__verdict { display: grid; align-content: start; gap: 5px; min-width: 0; }
+.zwilling-scenario { font-size: var(--fs-xs); color: var(--text-2); }
+.zwilling-verdict { font-size: var(--fs-lg); line-height: 1.35; color: var(--text-1); }
+.zwilling-recommend { font-size: var(--fs-sm); color: var(--text-2); }
+.zwilling-recommend strong { color: var(--text-1); font-weight: 600; }
+.zwilling-recommend .status-icon { margin-right: 4px; }
+.zwilling-impact__note { font-size: var(--fs-xs); color: var(--state-setup); }
+
+.zwilling-compare { width: 100%; border-collapse: collapse; font-size: var(--fs-sm); }
+.zwilling-compare th, .zwilling-compare td { padding: 5px var(--sp-3); border-bottom: 1px solid var(--line-1); }
+.zwilling-compare tbody tr:last-child th, .zwilling-compare tbody tr:last-child td { border-bottom: 0; }
+.zwilling-compare thead th { padding-block: 5px 4px; background: var(--surface-2); border-bottom-color: var(--line-2); font-weight: 400; text-align: left; vertical-align: bottom; }
+.zwilling-compare__variant { text-align: right; border-left: 1px solid var(--line-2); white-space: nowrap; }
+.zwilling-compare__letter { display: inline-flex; align-items: center; gap: 5px; margin-right: 6px; font-weight: 700; color: var(--text-1); }
+.zwilling-compare__name { color: var(--text-1); font-weight: 600; }
+.zwilling-compare__sub { display: block; font-size: var(--fs-xs); font-weight: 400; }
+.zwilling-compare__deltahead { white-space: nowrap; }
+.zwilling-compare__deltahead > * { display: block; }
+.zwilling-compare__deltahead .faint { font-size: var(--fs-xs); }
+.zwilling-compare__metric { font-weight: 400; text-align: left; color: var(--text-2); white-space: nowrap; }
+.zwilling-compare__value { font-family: var(--font-mono); font-variant-numeric: tabular-nums; font-size: var(--fs-md); font-weight: 600; color: var(--text-1); border-left: 1px solid var(--line-2); white-space: nowrap; }
+.zwilling-compare__delta { white-space: nowrap; }
+.zwilling-compare tbody tr:hover { background: var(--surface-2); }
+.zwilling-delta { min-height: 19px; font-size: var(--fs-xs); }
+.zwilling-delta .status-icon { margin-right: 1px; }
+
+/* ---------------------------------------------------------------- orders */
+.zwilling-legend { display: inline-flex; align-items: center; gap: var(--sp-2); font-size: var(--fs-xs); color: var(--text-2); }
+.zwilling-legend__item { display: inline-flex; align-items: center; gap: 4px; }
+.zwilling-legend__due line { stroke: var(--text-1); stroke-width: 1.6; }
+.zwilling-orders__scroll { max-height: 262px; overflow: auto; }
+.zwilling-orders th, .zwilling-orders td { padding-inline: 6px; }
+.zwilling-orders td { padding-block: 2px; white-space: nowrap; }
+.zwilling-orders__product { margin-left: 6px; color: var(--text-2); font-size: var(--fs-xs); }
+.zwilling-orders__head { display: inline-flex; align-items: center; gap: 4px; }
+.zwilling-orders__when { font-size: var(--fs-xs); }
+.zwilling-orders__when .mono { font-size: var(--fs-xs); }
+.zwilling-orders__late { margin-left: 6px; color: var(--text-3); }
+.zwilling-orders__late.is-late { color: var(--state-setup); }
+.zwilling-orders__when .tag { margin-left: 6px; }
+.zwilling-orders__rush { margin-left: 6px; }
+.zwilling-orders td.zwilling-orders__plot { padding-block: 0; width: 140px; }
+.zwilling-orders__chart { display: block; overflow: visible; }
+.zwilling-orders__rule { stroke: var(--line-2); stroke-width: 1; }
+.zwilling-orders__due { stroke: var(--text-1); stroke-width: 1.6; }
+.zwilling-orders__mark { stroke: var(--surface-1); stroke-width: 1.5; paint-order: stroke; }
+.zwilling-orders__mark--A { fill: var(--surface-1); stroke: var(--text-2); stroke-width: 1.5; }
+.zwilling-orders__mark--B { fill: var(--metal); }
+.zwilling-orders__mark--C { fill: var(--accent); }
+
+/* ---------------------------------------------------------------- Monte Carlo */
+.zwilling-mc { display: grid; gap: var(--sp-2); }
+.zwilling-mc__off { font-size: var(--fs-sm); color: var(--text-2); }
+.zwilling-mc__insight { margin-top: 6px; font-size: var(--fs-md); color: var(--text-1); }
+.zwilling-mc__legend { display: flex; align-items: center; gap: 6px; margin-top: 3px; font-size: var(--fs-xs); color: var(--text-3); }
+.zwilling-mc__swatch { display: inline-block; width: 20px; height: 6px; border-radius: 3px; background: var(--metal-2); }
+.zwilling-range { display: grid; gap: 3px; min-width: 0; }
+.zwilling-range__head { display: flex; justify-content: space-between; font-size: var(--fs-sm); color: var(--text-1); font-weight: 600; }
+.zwilling-range__legend { font-size: var(--fs-xs); font-weight: 400; }
+.zwilling-range__row { display: grid; grid-template-columns: 26px minmax(60px, 1fr) 268px; align-items: center; gap: 6px; min-height: 20px; }
+.zwilling-range__key { display: inline-flex; align-items: center; gap: 4px; font-size: var(--fs-xs); font-weight: 700; }
+.zwilling-range__track { position: relative; height: 16px; border-bottom: 1px solid var(--line-1); }
+.zwilling-range__track > * { min-width: 6px; }
+.zwilling-range__bar { position: absolute; top: 6px; height: 7px; border-radius: 3.5px; }
+.zwilling-range__bar--B { background: var(--metal-2); }
+.zwilling-range__bar--C { background: var(--accent); }
+.zwilling-range__track .zwilling-range__median { position: absolute; top: 3px; min-width: 0; width: 2px; height: 13px; margin-left: -1px; background: var(--text-1); }
+.zwilling-range__det { position: absolute; top: 3px; width: 13px; height: 13px; margin-left: -6.5px; border: 1.5px solid var(--text-2); border-radius: 50%; }
+.zwilling-range__values { font-size: var(--fs-xs); color: var(--text-2); white-space: nowrap; text-align: right; }
+.zwilling-range__axis { display: grid; grid-template-columns: auto auto 268px; justify-content: stretch; gap: 6px; padding-left: 32px; font-size: var(--fs-xs); color: var(--text-3); }
+.zwilling-range__axis > :nth-child(2) { text-align: right; }
+
+/* ---------------------------------------------------------------- apply */
+.zwilling-apply { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--sp-2); }
+.zwilling-apply__steps { display: grid; gap: 3px; padding-left: 17px; list-style: decimal; font-size: var(--fs-sm); color: var(--text-1); line-height: 1.32; }
+.zwilling-apply__steps li::marker { color: var(--text-3); font-family: var(--font-mono); font-size: var(--fs-xs); }
+.zwilling-solvers { display: grid; gap: 3px; margin: 0; padding: 0; border: 0; }
+.zwilling-solver { display: flex; flex-wrap: wrap; align-items: center; gap: 2px 6px; padding: 4px 6px; border: 1px solid var(--line-1); border-radius: var(--radius); cursor: pointer; }
+.zwilling-solver:hover { background: var(--surface-2); }
+.zwilling-solver:has(input:checked) { border-color: var(--line-3); background: var(--surface-2); }
+.zwilling-solver.is-disabled { cursor: not-allowed; color: var(--text-3); }
+.zwilling-solver input { margin: 0; accent-color: var(--accent); }
+.zwilling-solver__name { font-size: var(--fs-sm); font-weight: 600; white-space: nowrap; }
+.zwilling-solver__time { margin-left: auto; font-size: var(--fs-xs); color: var(--text-2); }
+.zwilling-solver__facts { flex: 1 0 100%; padding-left: 19px; font-size: var(--fs-xs); color: var(--text-2); }
+.zwilling-apply__aging { display: grid; gap: 4px; padding-top: var(--sp-2); border-top: 1px solid var(--line-1); }
+.zwilling-apply__age { font-size: var(--fs-sm); color: var(--text-1); }
+.zwilling-apply__agenote { font-size: var(--fs-xs); color: var(--text-2); }
+.zwilling-apply__agenote.is-aged { color: var(--state-setup); }
+.zwilling-apply__go { width: 100%; min-height: 34px; font-size: var(--fs-md); font-weight: 600; }
+.zwilling-apply__result { display: grid; gap: 4px; }
+.zwilling-apply__result:empty { display: none; }
+.zwilling-apply__state { font-size: var(--fs-sm); color: var(--text-1); }
+.zwilling-apply__blocked { font-size: var(--fs-sm); color: var(--state-setup); }
+.zwilling-apply__hint { font-size: var(--fs-xs); color: var(--text-2); }
+
+/* ---------------------------------------------------------------- replay */
+.zwilling-replay { display: grid; gap: 0; background: var(--surface-1); border: 2px solid var(--line-2); border-radius: var(--radius); overflow: hidden; scroll-margin-top: 4px; }
+.zwilling-replay--fork { border-color: var(--accent); }
+
+.zwilling-bar { display: flex; align-items: center; gap: var(--sp-3); min-height: 30px; padding: 0 var(--sp-3); background: var(--surface-2); border-bottom: 1px solid var(--line-2); white-space: nowrap; }
+.zwilling-bar__tag { padding: 1px 8px; border: 1px solid var(--line-3); border-radius: 2px; font-size: var(--fs-sm); font-weight: 600; color: var(--text-1); }
+.zwilling-bar__variant { font-size: var(--fs-sm); color: var(--text-1); overflow: hidden; text-overflow: ellipsis; }
+.zwilling-bar__spacer { flex: 1; }
+.zwilling-bar__note { font-size: var(--fs-xs); color: var(--text-2); }
+.zwilling-bar__time { font-family: var(--font-mono); font-variant-numeric: tabular-nums; font-size: var(--fs-lg); font-weight: 600; min-width: 118px; text-align: right; }
+.zwilling-replay--fork .zwilling-bar { background: var(--accent-dim); border-bottom-color: var(--accent); }
+.zwilling-replay--fork .zwilling-bar__tag { background: var(--accent); border-color: var(--accent); color: var(--surface-0); font-weight: 700; }
+
+.zwilling-replay--idle > :not(.zwilling-bar) { display: none; }
+.zwilling-replay--idle .zwilling-bar { border-bottom: 0; }
+.zwilling-already { display: flex; align-items: baseline; gap: 6px; font-size: var(--fs-sm); color: var(--text-1); }
+.zwilling-replay__hall .hall { border: 0; border-radius: 0; }
+.zwilling-replay__hall .hall__svg { max-height: max(calc(100vh - var(--topbar-h) - 354px), 360px); }
+/* The floor changes colour with the fork: the same drawing, unmistakably not the live plant. */
+.zwilling-replay--fork .hall {
+  --floor: color-mix(in srgb, var(--surface-0) 84%, var(--accent));
+  --floor-grid: color-mix(in srgb, var(--surface-1) 77%, var(--accent));
+  --floor-zone: color-mix(in srgb, var(--surface-1) 84%, var(--accent));
+  --floor-mark: color-mix(in srgb, var(--line-2) 62%, var(--accent));
+  --wall: color-mix(in srgb, var(--line-2) 55%, var(--accent));
+  --wall-edge: color-mix(in srgb, var(--line-3) 60%, var(--accent));
+}
+
+.zwilling-transport { display: grid; grid-template-columns: auto auto auto minmax(160px, 1fr) minmax(158px, auto) auto; align-items: center; gap: var(--sp-2); padding: 5px var(--sp-3); background: var(--surface-1); border-top: 1px solid var(--line-1); border-bottom: 1px solid var(--line-1); }
+.zwilling-transport__source .seg__btn { font-family: var(--font-ui); padding-inline: 10px; }
+.zwilling-transport .seg__btn:disabled { color: var(--text-3); background: transparent; cursor: not-allowed; font-weight: 400; }
+.zwilling-transport__play { width: 34px; }
+.zwilling-transport__offset { font-family: var(--font-mono); font-variant-numeric: tabular-nums; font-size: var(--fs-xs); color: var(--text-2); white-space: nowrap; text-align: right; }
+.zwilling-transport__speed { display: inline-flex; align-items: center; gap: 5px; font-size: var(--fs-xs); }
+
+.zwilling-scrub { position: relative; height: 34px; min-width: 0; }
+.zwilling-replay:not(.zwilling-replay--fork) .zwilling-scrub__marks { visibility: hidden; }
+.zwilling-scrub__marks { position: absolute; inset: 0 6px; pointer-events: none; }
+.zwilling-scrub__band { position: absolute; top: 7px; height: 10px; }
+.zwilling-scrub__band--machine_down { background: var(--state-fault-body); border-left: 1px solid var(--state-fault); }
+.zwilling-scrub__band--slowdown { background: var(--state-setup-dim); border-left: 1px solid var(--state-setup); }
+.zwilling-scrub__due { position: absolute; top: 3px; bottom: 0; width: 1px; padding-left: 3px; border-left: 1px solid var(--text-1); font-size: 10px; line-height: 1; color: var(--text-2); white-space: nowrap; display: flex; align-items: flex-end; }
+.zwilling-scrub__end { position: absolute; bottom: 0; transform: translateX(-50%); white-space: nowrap; font-family: var(--font-mono); font-size: 10px; line-height: 1; color: var(--text-2); }
+.zwilling-scrub__end::before { content: ""; display: block; width: 1px; height: 6px; margin: 0 auto 1px; background: var(--line-3); }
+.zwilling-scrub__input { position: absolute; left: 0; right: 0; top: 2px; width: 100%; height: 20px; margin: 0; background: transparent; appearance: none; -webkit-appearance: none; cursor: pointer; }
+.zwilling-scrub__input:disabled { cursor: not-allowed; opacity: .5; }
+.zwilling-scrub__input::-webkit-slider-runnable-track { height: 6px; background: linear-gradient(to right, var(--accent) var(--fill, 0%), color-mix(in srgb, var(--surface-3) 70%, transparent) var(--fill, 0%)); border-radius: 1px; }
+.zwilling-scrub__input::-moz-range-track { height: 6px; background: linear-gradient(to right, var(--accent) var(--fill, 0%), color-mix(in srgb, var(--surface-3) 70%, transparent) var(--fill, 0%)); border-radius: 1px; }
+.zwilling-scrub__input::-webkit-slider-thumb { -webkit-appearance: none; width: 12px; height: 18px; margin-top: -6px; background: var(--text-1); border: 2px solid var(--surface-1); border-radius: 2px; }
+.zwilling-scrub__input::-moz-range-thumb { width: 8px; height: 14px; background: var(--text-1); border: 2px solid var(--surface-1); border-radius: 2px; }
+
+.zwilling-replay__noframes { padding: var(--sp-4) var(--sp-3); font-size: var(--fs-md); color: var(--text-1); background: color-mix(in srgb, var(--surface-0) 84%, var(--accent)); }
+.zwilling-replay__status { display: grid; grid-template-columns: minmax(0, 1fr) 236px; border-bottom: 1px solid var(--line-1); }
+.zwilling-replay__status--live { grid-template-columns: minmax(0, 1fr); }
+.zwilling-replay__status--live .zwilling-at { display: none; }
+.zwilling-strip { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); }
+.zwilling-strip__cell { display: grid; align-content: center; gap: 1px; padding: 3px var(--sp-2) 4px; border-right: 1px solid var(--line-1); border-top: 2px solid transparent; min-width: 0; }
+.zwilling-strip__cell--run { border-top-color: var(--state-run); }
+.zwilling-strip__cell--setup { border-top-color: var(--state-setup); }
+.zwilling-strip__cell--idle { border-top-color: var(--state-idle-dim); }
+.zwilling-strip__cell--fault { border-top-color: var(--state-fault); background: var(--state-fault-dim); }
+.zwilling-strip__head { display: flex; align-items: center; justify-content: space-between; gap: 4px; min-width: 0; }
+.zwilling-strip__head .status-badge { font-size: var(--fs-xs); }
+.zwilling-strip__id { font-weight: 700; font-size: var(--fs-sm); }
+.zwilling-strip__lot { font-family: var(--font-mono); font-size: var(--fs-xs); color: var(--text-2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+.zwilling-at { border-collapse: collapse; font-size: var(--fs-xs); width: 100%; }
+.zwilling-at th, .zwilling-at td { padding: 0 6px; font-weight: 400; line-height: 14px; }
+.zwilling-at thead th { color: var(--text-3); text-align: left; border-bottom: 1px solid var(--line-1); }
+.zwilling-at thead th.num { text-align: right; }
+.zwilling-at tbody th { text-align: left; }
+.zwilling-at td { font-family: var(--font-mono); font-variant-numeric: tabular-nums; color: var(--text-1); }
+.zwilling-at__key { display: inline-flex; align-items: center; gap: 4px; font-weight: 700; }
+.zwilling-at tr.is-current { background: var(--accent-dim); }
+
+/* The chart's playhead is the replay position here, not the present of the plant. */
+.zwilling-replay--fork .gantt-flag__bg, .zwilling-replay--fork .gantt-flag__text { display: none; }
+.zwilling-replay__ganttnote { padding: 0 var(--sp-3) var(--sp-2); font-size: var(--fs-xs); color: var(--text-3); }
+.zwilling-replay__gantt { min-width: 0; padding: 3px var(--sp-2) 3px; }
+/* Chart first: its legend goes below, so hall and bars fit one screen at 1440x900. */
+.zwilling-replay__gantt .gantt__legend { order: 2; }
+
+@media (max-width: 1360px) {
+  .zwilling-work { grid-template-columns: 340px minmax(0, 1fr); }
+  .zwilling-frame { grid-template-columns: minmax(190px, 220px) minmax(0, 1fr) minmax(190px, 220px); }
+  .zwilling-hero { min-width: 220px; padding-right: var(--sp-3); }
+  .zwilling-hero__figure { font-size: 36px; }
+  .zwilling-bar__note { display: none; }
+  .zwilling-orders th:last-child, .zwilling-orders__plot { display: none; }
+  .zwilling-compare th, .zwilling-compare td { padding-inline: var(--sp-2); }
+  .zwilling-compare__letter { margin-right: 3px; }
+}

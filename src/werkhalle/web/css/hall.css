@@ -1,0 +1,209 @@
+/* The hall. Sizes are in viewBox units, so text scales with the drawing. */
+.hall { position: relative; width: 100%; background: var(--floor); border: 1px solid var(--line-1); border-radius: var(--radius); overflow: hidden; }
+.hall__svg { display: block; width: 100%; height: auto; max-height: max(calc(100vh - var(--topbar-h) - 268px), 470px); user-select: none; }
+.hall__banner { position: absolute; left: 50%; top: 10px; transform: translateX(-50%); padding: 3px 12px; font-size: var(--fs-sm); font-weight: 600; border-radius: 2px; border: 1px solid var(--line-3); background: var(--surface-3); }
+.hall__banner--warn { background: var(--state-setup-dim); border-color: var(--state-setup); color: #ffe7b4; }
+.hall__banner--fault { background: var(--state-fault-dim); border-color: var(--state-fault); color: #ffd5d6; }
+.hall__clock { position: absolute; right: 26px; bottom: 26px; font-family: var(--font-mono); font-size: var(--fs-lg); font-weight: 600; color: var(--text-1); background: var(--surface-1); padding: 2px 8px; border: 1px solid var(--line-2); border-radius: 2px; }
+
+/* Floor and building */
+.floor { fill: var(--floor); }
+.floor__grid { fill: none; stroke: var(--floor-grid); stroke-width: 1; }
+.wall { fill: none; stroke: var(--wall); stroke-width: 12; }
+.column { fill: var(--wall-edge); }
+.aisle { fill: none; stroke: var(--floor-mark); stroke-width: 1.5; stroke-dasharray: 14 10; }
+.aisle__label { font: 500 10px var(--font-ui); fill: var(--text-3); letter-spacing: .12em; opacity: .75; }
+.area { font: 600 10.5px var(--font-ui); fill: var(--text-3); letter-spacing: .14em; }
+.art__floor { font: 700 22px var(--font-ui); fill: var(--eq-3); letter-spacing: .02em; }
+.art__note { font: 400 11px var(--font-mono); fill: var(--text-2); font-variant-numeric: tabular-nums; }
+
+/* Conveyors. The rollers are a wide dashed stroke. */
+.conv__bed { fill: none; stroke: var(--eq-4); stroke-width: 13; stroke-linejoin: round; }
+.conv__rollers { fill: none; stroke: var(--eq-3); stroke-width: 9; stroke-dasharray: 2 5; stroke-linejoin: round; }
+.conv__flow { fill: none; stroke: transparent; stroke-width: 2; stroke-dasharray: 5 13; }
+.conv__arrow { fill: none; stroke: var(--eq-1); stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+.conv--blocked .conv__arrow { stroke: #a22e34; }
+.conv--active .conv__flow { stroke: var(--metal-2); animation: conv-flow 1.2s linear infinite; }
+.conv--starved .conv__bed { stroke: var(--eq-5); }
+.conv--starved .conv__rollers { stroke: var(--eq-4); stroke-dasharray: 1 9; }
+.conv--blocked .conv__bed { stroke: #3a2226; }
+.conv--blocked .conv__rollers { stroke: #6a2d32; stroke-dasharray: 4 7; }
+@keyframes conv-flow { to { stroke-dashoffset: -18; } }
+
+.table { fill: none; stroke: var(--eq-4); stroke-width: 20; }
+.table__rollers { fill: none; stroke: var(--eq-3); stroke-width: 15; stroke-dasharray: 2.5 8; }
+.bed { fill: var(--eq-5); stroke: var(--eq-4); }
+.bed__chain { fill: none; stroke: var(--eq-3); stroke-width: 2; stroke-dasharray: 3 3; }
+.station { fill: var(--eq-5); stroke: var(--eq-3); }
+.tray { fill: var(--eq-4); stroke: var(--eq-3); }
+
+/* Equipment */
+.eq1 { fill: var(--eq-1); }
+.eq2 { fill: var(--eq-2); }
+.eq3 { fill: var(--eq-3); }
+.eq4 { fill: var(--eq-4); }
+.eq5 { fill: var(--eq-5); }
+.edge { stroke: var(--eq-edge); stroke-width: .8; stroke-opacity: .55; }
+.rib { fill: none; stroke: var(--eq-5); stroke-width: 1.5; }
+.belt { fill: none; stroke: var(--eq-2); stroke-width: 2.5; }
+.chute { fill: var(--eq-5); }
+.guard { fill: var(--eq-2); }
+.pit { fill: #0d1115; stroke: var(--eq-3); stroke-dasharray: 3 3; }
+.door-slat { fill: var(--eq-3); }
+.door-lines { fill: none; stroke: var(--eq-5); stroke-width: 1.5; }
+
+/* Material inside the machines */
+.billet { fill: var(--metal); }
+.strand { }
+.strand--cold { fill: var(--metal-2); }
+.bar { fill: var(--metal); }
+.log { fill: var(--metal-2); }
+.it-metal { fill: var(--metal); stroke: var(--floor); stroke-width: .8; }
+.it-face { fill: #dfe5ea; stroke: var(--metal-3); stroke-width: .6; }
+.it-frame { fill: var(--eq-5); stroke: var(--metal-2); stroke-width: 1.4; }
+.it-bars { fill: none; stroke: var(--metal); stroke-width: 1.5; }
+.it-bars--thick { stroke-width: 2.3; }
+.it-band { fill: none; stroke: var(--eq-5); stroke-width: 2.4; }
+.it-block { fill: var(--metal-2); stroke: var(--floor); stroke-width: .8; }
+.it-strap { fill: none; stroke: #e8edf1; stroke-width: 1.8; }
+.bundle__lines { fill: none; stroke: var(--metal-3); stroke-width: 1; }
+.strap { fill: #e8edf1; }
+.strap-lance { fill: var(--eq-1); }
+
+.item { pointer-events: auto; }
+.item__tag { fill: var(--metal-3); }
+.item__count { font: 600 10.5px var(--font-mono); fill: var(--text-1); paint-order: stroke; stroke: var(--floor); stroke-width: 3px; }
+
+/* Casting line */
+.melt { fill: var(--melt-dim); }
+.melt--on { fill: var(--melt); }
+.melt--cold { fill: #3a2118; }
+.melt-skin { fill: none; stroke: var(--eq-2); stroke-width: 1.2; }
+.melt-skin--on { stroke: #ffe2b0; }
+.melt-glow { animation: glow-breathe 2.8s ease-in-out infinite; }
+@keyframes glow-breathe { 50% { opacity: .55; } }
+.melt-stream { fill: none; stroke: var(--melt-core); stroke-width: 2.6; stroke-linecap: round; }
+
+/* Furnace */
+.heat { fill: var(--heat); }
+.heat-bar { fill: var(--heat); }
+.heat-tick { fill: none; stroke: var(--text-1); stroke-width: 1.4; }
+.fan { fill: var(--eq-1); }
+.fill-bar { fill: var(--metal-2); }
+.slot__frame { fill: none; stroke: var(--eq-3); stroke-width: 1; stroke-dasharray: 2 2; }
+.slot__bars, .slot__tag { visibility: hidden; }
+.slot__bars { fill: none; stroke: var(--metal); stroke-width: 1.6; }
+.slot--full .slot__frame { stroke: var(--metal-2); stroke-width: 1.3; stroke-dasharray: none; fill: rgba(14, 18, 22, .55); }
+.slot--full .slot__bars, .slot--full .slot__tag { visibility: visible; }
+
+/* Saw */
+.blade { fill: var(--eq-1); stroke: var(--metal); stroke-width: .6; }
+
+/* Stack light */
+.light__body { fill: var(--eq-5); stroke: var(--eq-3); stroke-width: .8; }
+.lamp { fill: var(--eq-4); }
+.lamp--run { fill: var(--state-run); }
+.lamp--setup { fill: var(--state-setup); }
+.lamp--fault { fill: var(--state-fault-strong); }
+
+/* Zones */
+.zone__floor { fill: var(--floor-zone); stroke: var(--floor-mark); stroke-width: 1; stroke-dasharray: 6 4; }
+.zone__title { font: 600 12px var(--font-ui); fill: var(--text-1); }
+.zone__count { font: 400 11px var(--font-mono); fill: var(--text-2); font-variant-numeric: tabular-nums; }
+.zone__line { font: 400 11px var(--font-mono); fill: var(--text-2); }
+.zone__more { font: 400 11px var(--font-mono); fill: var(--text-2); }
+.rack { fill: var(--eq-5); stroke: var(--eq-3); stroke-width: 1; }
+.rack__alloy { font: 600 12px var(--font-mono); fill: var(--text-2); }
+.rack__count { font: 600 12px var(--font-mono); fill: var(--text-1); font-variant-numeric: tabular-nums; }
+.rack__count--empty { fill: var(--state-setup); }
+.billet-end { fill: var(--metal-2); stroke: var(--eq-5); stroke-width: .8; }
+.ship__big { font: 600 15px var(--font-mono); fill: var(--text-1); font-variant-numeric: tabular-nums; }
+
+/* Legend */
+.legend__bg { fill: none; stroke: var(--floor-mark); stroke-width: 1; }
+.legend__text { font: 400 11px var(--font-ui); fill: var(--text-2); }
+.legend__shape--run { fill: var(--state-run); }
+.legend__shape--setup { fill: var(--state-setup); }
+.legend__shape--fault { fill: var(--state-fault); }
+.legend__shape--idle { fill: none; stroke: var(--state-idle); stroke-width: 1.5; }
+.legend__hatch { fill: var(--eq-5); stroke: var(--line-3); stroke-dasharray: 2 2; }
+.legend__blocked { fill: none; stroke: #6a2d32; stroke-width: 7; stroke-dasharray: 4 3; }
+.legend__tag { fill: var(--lot-2); }
+
+/* Nameplate */
+.plate__bg { fill: var(--surface-2); stroke: var(--line-2); stroke-width: 1; }
+.plate__stripe { fill: var(--state-idle); }
+.plate__id { font: 700 13px var(--font-ui); fill: var(--text-1); }
+.plate__name { font: 400 12px var(--font-ui); fill: var(--text-2); }
+.plate__status { font: 700 11.5px var(--font-ui); letter-spacing: .05em; }
+.plate__since { font: 400 11px var(--font-mono); fill: var(--text-3); }
+.plate__warn { font: 600 10.5px var(--font-ui); fill: var(--state-setup); }
+.plate__val { font: 400 12px var(--font-mono); fill: var(--text-1); font-variant-numeric: tabular-nums; }
+.plate__val--dim { fill: var(--text-2); }
+.plate__label { font: 500 10.5px var(--font-ui); fill: var(--text-3); }
+.plate__oee-track, .plate__bar-track { fill: var(--surface-3); }
+.plate__oee { fill: var(--metal); }
+.plate__bar { fill: var(--state-idle); }
+.plate__shape { fill: var(--state-idle); }
+.plate__shape--hollow { fill: none; stroke: var(--state-idle); stroke-width: 1.5; }
+
+.plate--run .plate__stripe, .plate--run .plate__shape, .plate--run .plate__bar { fill: var(--state-run); }
+.plate--run .plate__status { fill: var(--state-run); }
+.plate--setup .plate__stripe, .plate--setup .plate__shape, .plate--setup .plate__bar { fill: var(--state-setup); }
+.plate--setup .plate__status { fill: var(--state-setup); }
+.plate--idle .plate__status { fill: var(--state-idle); }
+.plate--fault .plate__bg { fill: var(--state-fault-body); stroke: var(--state-fault-strong); stroke-width: 1.5; }
+.plate--fault .plate__stripe, .plate--fault .plate__shape, .plate--fault .plate__bar { fill: var(--state-fault-strong); }
+.plate--fault .plate__status, .plate--fault .plate__id, .plate--fault .plate__val { fill: #fff; }
+.plate--fault .plate__name, .plate--fault .plate__since, .plate--fault .plate__label { fill: #f6c9cb; }
+.plate--fault .plate__bar-track, .plate--fault .plate__oee-track { fill: #4a1418; }
+.plate--starved .plate__status { fill: var(--text-2); }
+
+/* Fault tag on top of the drawing */
+.flag__bg { fill: var(--state-fault); }
+.flag__halo { fill: none; stroke: var(--state-fault-strong); stroke-width: 2; animation: fault-pulse 1.6s ease-in-out infinite; }
+.flag__icon { fill: #fff; }
+.flag__mark { fill: none; stroke: var(--state-fault); stroke-width: 1.4; stroke-linecap: round; }
+.flag__text { font: 800 12.5px var(--font-ui); fill: #fff; letter-spacing: .05em; }
+.flag__code { font: 700 12px var(--font-mono); fill: #fff; }
+@keyframes fault-pulse { 50% { stroke-opacity: .15; } }
+
+/* Machine groups */
+.st { cursor: default; outline: none; }
+.st[role="button"] { cursor: pointer; }
+.st__hit { fill: transparent; }
+.st__outline { fill: none; stroke: transparent; stroke-width: 1.5; pointer-events: none; }
+.st[role="button"]:hover .st__outline { stroke: var(--line-3); }
+.st:focus-visible .st__outline { stroke: var(--focus); stroke-width: 2.5; }
+.st.is-selected .st__outline { stroke: var(--accent); stroke-width: 2; }
+.st__hatch { pointer-events: none; }
+.hatch__line { stroke: rgba(150, 165, 178, .13); stroke-width: 2.5; }
+
+/* A faulted machine is unmistakably red, the whole drawing, not just a lamp. */
+.st--fault .eq1 { fill: #c8434a; }
+.st--fault .eq2 { fill: #a22e34; }
+.st--fault .eq3 { fill: #84232a; }
+.st--fault .eq4 { fill: #641b20; }
+.st--fault .eq5 { fill: #451317; }
+.st--fault .edge { stroke: var(--state-fault-strong); stroke-opacity: 1; stroke-width: 1.2; }
+.st--fault .table { stroke: #641b20; }
+.st--fault .table__rollers { stroke: #a22e34; }
+.st--fault .bed { fill: #451317; stroke: #a22e34; }
+.st--fault .bed__chain { stroke: #84232a; }
+.st--fault .station, .st--fault .tray { fill: #451317; stroke: #a22e34; }
+.st--fault .blade, .st--fault .fan { fill: #c8434a; stroke: #ffb3b6; }
+.st--fault .guard { fill: #a22e34; }
+.st--fault .art__floor { fill: #84232a; }
+.st--fault .st__outline { stroke: var(--state-fault-strong); stroke-width: 2.5; animation: fault-pulse 1.6s ease-in-out infinite; }
+.st--fault .heat { fill: #84232a; }
+
+/* Rüsten: the part being changed is marked, the rest stays calm. */
+.st--setup .die { stroke: var(--state-setup); stroke-opacity: 1; stroke-width: 1.6; }
+.st--setup .door { stroke: var(--state-setup); stroke-opacity: 1; stroke-width: 1.4; }
+
+/* Wartet auf Material: visibly out of work */
+.st--starved .st__art { opacity: .62; }
+
+@media (prefers-reduced-motion: reduce) {
+  .flag__halo, .st--fault .st__outline, .melt-glow { animation: none; }
+}

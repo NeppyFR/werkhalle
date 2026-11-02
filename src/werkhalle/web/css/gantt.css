@@ -1,0 +1,129 @@
+/* Gantt chart, shared by Planung and Zwilling.
+   Order palette: five hues, the most that pass the all-pairs check of the dataviz validator on the plot surface --surface-0 (CVD 9.0, normal
+   vision 15.3, contrast 3:1), because any two orders can end up side by side in a Gantt. Hues keep clear of the state colours run, setup and
+   fault, and stay calm: OKLCH C 0.10 to 0.11. Identity past five orders is composite (the same hue as a hollow bar), past ten it folds into
+   neutral "weitere". */
+.gantt, .gantt__legend, .gantt__key {
+  --g-0: #059eb1;
+  --g-1: #bd7953;
+  --g-2: #974c72;
+  --g-3: #4b6c21;
+  --g-4: #4268a8;
+  --g-ink-dark: #0b0f13;
+  --g-ink-light: #ffffff;
+}
+.gantt {
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+}
+
+/* Fills */
+.gs0 { fill: var(--g-0); }
+.gs1 { fill: var(--g-1); }
+.gs2 { fill: var(--g-2); }
+.gs3 { fill: var(--g-3); }
+.gs4 { fill: var(--g-4); }
+.gs5, .gs6, .gs7, .gs8, .gs9 { fill-opacity: .24; stroke-width: 1.2; }
+.gs5 { fill: var(--g-0); stroke: var(--g-0); }
+.gs6 { fill: var(--g-1); stroke: var(--g-1); }
+.gs7 { fill: var(--g-2); stroke: var(--g-2); }
+.gs8 { fill: var(--g-3); stroke: var(--g-3); }
+.gs9 { fill: var(--g-4); stroke: var(--g-4); }
+.gsn { fill: var(--metal-3); }
+.gsc { fill: var(--eq-3); }
+
+.gantt__frame { position: relative; min-width: 0; }
+.gantt__svg { display: block; width: 100%; user-select: none; -webkit-user-select: none; touch-action: pan-y; font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+.gantt__svg:focus-visible { outline: 2px solid var(--focus); outline-offset: 1px; }
+.gantt__svg.is-grabbing, .gantt__svg.is-grabbing * { cursor: grabbing !important; }
+.gantt-plotbg { fill: var(--surface-0); }
+.gantt-past { fill: #000; opacity: .22; pointer-events: none; }
+.gantt-rowline { stroke: var(--line-1); stroke-width: 1; shape-rendering: crispEdges; }
+.gantt-grid { stroke: var(--line-1); stroke-width: 1; shape-rendering: crispEdges; }
+.gantt-grid--day { stroke: var(--line-3); }
+.gantt-axisline { stroke: var(--line-2); stroke-width: 1; shape-rendering: crispEdges; }
+.gantt-tick { fill: var(--text-3); font-size: 10px; }
+.gantt-day { fill: var(--text-2); font-size: 11px; font-family: var(--font-ui); font-weight: 600; }
+.gantt-rowid { fill: var(--text-1); font-size: 11px; font-weight: 700; }
+.gantt-rowname { fill: var(--text-2); font-size: 11px; font-family: var(--font-ui); }
+
+/* Marks */
+.gantt-mark { cursor: pointer; }
+.gantt-fill { shape-rendering: crispEdges; }
+.gantt-setup { shape-rendering: crispEdges; }
+.gantt-lab { font-size: 10px; pointer-events: none; }
+.gantt--compact .gantt-lab { font-size: 9px; }
+.gantt-lab--d { fill: var(--g-ink-dark); }
+.gantt-lab--l { fill: var(--g-ink-light); }
+.gantt-lab--t { fill: var(--text-1); }
+.gantt-block { fill: none; stroke: var(--text-3); stroke-width: 1; shape-rendering: crispEdges; }
+.gantt-remaining { fill: #000; opacity: .34; pointer-events: none; shape-rendering: crispEdges; }
+.gantt-frozen { fill: var(--text-1); pointer-events: none; shape-rendering: crispEdges; }
+.gantt-late { fill: var(--state-setup); stroke: var(--surface-0); stroke-width: 1; pointer-events: none; }
+
+/* State: done is low and thin, running is outlined and darkened where it has yet to run, pending is the plain bar. */
+.gantt-mark--done .gantt-fill { opacity: .42; }
+.gantt-mark--done .gantt-setup { opacity: .35; }
+.gantt-mark--done .gantt-block { stroke: var(--line-3); }
+.gantt-mark--running .gantt-fill { stroke: var(--text-1); stroke-width: 1; }
+
+/* Selection: other orders step back, the selected order takes an outline on every machine. */
+.gantt--selection .gantt-mark { opacity: .28; }
+.gantt--selection .gantt-mark.is-sel { opacity: 1; }
+.gantt--selection .gantt-mark.is-sel .gantt-fill.is-sel { stroke: var(--text-1); stroke-width: 1.5; opacity: 1; }
+.gantt--selection .gantt-mark.is-sel .gantt-fill:not(.is-sel) { opacity: .3; }
+.gantt-mark.is-hover .gantt-fill { stroke: var(--text-1); stroke-width: 1; }
+.gantt-mark.is-hover .gantt-block { stroke: var(--text-1); }
+
+/* Downtime: dim body under the bars, hatch and edges over them, so a frozen op that spans a fault still shows the fault. */
+.gantt-down { fill: var(--state-fault-dim); shape-rendering: crispEdges; }
+.gantt-faultveil { fill: var(--state-fault-dim); opacity: .78; pointer-events: none; shape-rendering: crispEdges; }
+.gantt-downhatch { pointer-events: none; shape-rendering: crispEdges; }
+.gantt-downedge { fill: var(--state-fault); pointer-events: none; shape-rendering: crispEdges; }
+.gantt-downplate { fill: var(--state-fault-dim); pointer-events: none; }
+.gantt-downlab { font-size: 10px; font-family: var(--font-ui); font-weight: 600; fill: #ffd5d6; pointer-events: none; }
+
+/* Lines and flags */
+.gantt-now { stroke: var(--text-1); stroke-width: 1.5; pointer-events: none; }
+.gantt-flag { pointer-events: none; }
+.gantt-flag__bg { fill: var(--text-1); }
+.gantt-flag__text { fill: var(--surface-0); font-size: 10px; font-family: var(--font-ui); font-weight: 700; }
+.gantt-due { stroke: var(--accent); stroke-width: 1.5; pointer-events: none; }
+.gantt-dueflag__bg { fill: var(--accent-dim); stroke: var(--accent); stroke-width: 1; }
+.gantt-dueflag__text { fill: var(--text-1); font-size: 10px; font-family: var(--font-ui); font-weight: 600; }
+.gantt-latespan { fill: var(--state-setup); opacity: .85; pointer-events: none; shape-rendering: crispEdges; }
+.gantt-cursor { fill: none; stroke: var(--focus); stroke-width: 2; pointer-events: none; }
+
+/* Overlay tools sit in the empty corner above the row labels */
+.gantt__tools { position: absolute; left: 0; top: 3px; display: flex; gap: 2px; }
+.gantt__tools .btn { min-width: 22px; padding: 0 5px; }
+
+/* Legend and key */
+.gantt__legend { display: flex; align-items: center; gap: var(--sp-1) var(--sp-3); flex-wrap: wrap; min-height: 22px; font-size: var(--fs-xs); }
+.gantt__chips { display: flex; flex-wrap: wrap; gap: 3px; min-width: 0; }
+.gantt-chip { display: inline-flex; align-items: center; gap: 4px; min-height: 20px; padding: 0 5px; background: transparent; border: 1px solid var(--line-1); border-radius: 2px; color: var(--text-2); font-family: var(--font-mono); font-size: var(--fs-xs); cursor: pointer; white-space: nowrap; }
+.gantt-chip:hover { color: var(--text-1); border-color: var(--line-3); }
+.gantt-chip[aria-pressed="true"] { color: var(--text-1); border-color: var(--text-1); background: var(--surface-3); }
+.gantt-chip__sw { flex: none; width: 10px; height: 10px; overflow: visible; }
+.gantt-chip .status-icon { margin-left: -1px; }
+.gantt__key { display: flex; align-items: center; flex-wrap: wrap; gap: 2px var(--sp-3); margin-left: auto; color: var(--text-3); }
+.gantt-key { display: inline-flex; align-items: center; gap: 4px; white-space: nowrap; }
+.gantt-key svg { flex: none; overflow: visible; }
+
+.gantt__table { max-height: 260px; overflow: auto; border: 1px solid var(--line-1); }
+.gantt__table td.mono { white-space: nowrap; }
+
+/* The tooltip keeps the page's tooltip look and adds rows */
+.gantt-tip { display: grid; gap: 1px; min-width: 190px; max-width: 340px; padding: 5px 8px 6px; }
+.gantt-tip__title { font-weight: 600; font-size: var(--fs-sm); padding-bottom: 2px; }
+.gantt-tip__rows { margin: 0; display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 0 var(--sp-3); font-size: var(--fs-xs); }
+.gantt-tip__rows dt { color: var(--text-3); }
+.gantt-tip__rows dd { margin: 0; font-family: var(--font-mono); font-variant-numeric: tabular-nums; color: var(--text-1); }
+.gantt-tip__warn { color: var(--state-setup); }
+
+.gantt__sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+
+@media (forced-colors: active) {
+  .gantt-fill { stroke: CanvasText; }
+}

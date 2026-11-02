@@ -1,0 +1,67 @@
+/* Leitstand layout: KPI band, hall, machine strip, alarms and log. */
+.leitstand { gap: 6px; padding: 6px var(--sp-2) var(--sp-2); }
+.leitstand__hall { flex: none; }
+.leitstand__stalled { flex: none; display: flex; align-items: center; gap: var(--sp-2); padding: 4px var(--sp-3); background: var(--state-fault-dim); border: 1px solid var(--state-fault); border-radius: var(--radius); font-size: var(--fs-sm); }
+/* The hall gives way to whatever is docked under the view, so KPIs, machine strip and the head of the alarms always fit. */
+.leitstand__hall .hall__svg { max-height: max(calc(100vh - var(--topbar-h) - var(--failure-h, 0px) - 270px), 280px); }
+.leitstand__lower { flex: 1 1 100px; min-height: 100px; display: grid; grid-template-columns: minmax(0, 3fr) minmax(0, 2fr); gap: 6px; }
+.leitstand__lower .panel { min-height: 0; }
+.row--fault td { color: #ffd5d6; }
+
+/* KPI band: one flat strip divided by hairlines, not a row of cards */
+.kpis { flex: none; display: grid; grid-template-columns: repeat(8, minmax(0, 1fr)); background: var(--surface-1); border: 1px solid var(--line-1); border-radius: var(--radius); }
+.kpi { display: grid; gap: 0; padding: 3px var(--sp-3) 4px; border-right: 1px solid var(--line-1); min-width: 0; }
+.kpi:last-child { border-right: 0; }
+.kpi__label { font-size: var(--fs-xs); color: var(--text-3); white-space: nowrap; }
+.kpi__main { display: flex; align-items: baseline; gap: 4px; min-width: 0; white-space: nowrap; }
+.kpi__value { font-family: var(--font-mono); font-variant-numeric: tabular-nums; font-size: 18px; font-weight: 600; line-height: 1.25; }
+.kpi__unit { font-size: var(--fs-xs); color: var(--text-2); }
+.kpi__sub { font-size: var(--fs-xs); color: var(--text-2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-height: 15px; }
+.kpi .status-icon { align-self: center; }
+
+/* Machine strip */
+.strip { flex: none; display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 0; background: var(--surface-1); border: 1px solid var(--line-1); border-radius: var(--radius); }
+.strip__cell {
+  display: grid;
+  gap: 1px;
+  padding: 4px var(--sp-2) 5px;
+  background: none;
+  border: 0;
+  border-right: 1px solid var(--line-1);
+  border-top: 2px solid transparent;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+  min-width: 0;
+}
+.strip__cell:last-child { border-right: 0; }
+.strip__cell:hover { background: var(--surface-2); }
+.strip__cell:focus-visible { outline-offset: -2px; }
+.strip__cell--run { border-top-color: var(--state-run); }
+.strip__cell--setup { border-top-color: var(--state-setup); }
+.strip__cell--idle { border-top-color: var(--state-idle-dim); }
+.strip__cell--fault { border-top-color: var(--state-fault); background: var(--state-fault-dim); }
+.strip__head { display: flex; align-items: center; justify-content: space-between; gap: 6px; min-width: 0; }
+.strip__id { font-weight: 700; font-size: var(--fs-sm); }
+.strip__head .status-badge { font-size: var(--fs-xs); }
+.strip__values { display: flex; justify-content: space-between; gap: 6px; font-size: var(--fs-xs); }
+.strip__num { font-family: var(--font-mono); font-variant-numeric: tabular-nums; font-size: var(--fs-xs); color: var(--text-1); white-space: nowrap; }
+.strip__oee { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 6px; }
+/* The estimate comes first in the DOM and shows on the right. When both do not fit, the code wraps onto the clipped second line and only the estimate stays. */
+.strip__line { display: flex; flex-flow: row-reverse wrap; justify-content: flex-end; height: 16px; line-height: 16px; overflow: hidden; font-family: var(--font-mono); font-size: var(--fs-xs); color: var(--text-2); white-space: pre; }
+.strip__line > span { max-width: 100%; overflow: hidden; text-overflow: ellipsis; }
+
+/* Live log */
+.log { margin: 0; padding: 0; list-style: none; font-size: var(--fs-sm); }
+.log__row { display: grid; grid-template-columns: 12px 42px 54px minmax(0, 1fr); align-items: baseline; gap: 6px; padding: 1px var(--sp-2); border-bottom: 1px solid var(--line-1); }
+.log__dot { width: 4px; height: 4px; align-self: center; justify-self: center; border-radius: 50%; background: var(--line-3); }
+.log__time { color: var(--text-3); font-size: var(--fs-xs); }
+.log__source { color: var(--text-2); font-size: var(--fs-xs); white-space: nowrap; }
+.log__text { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: var(--text-1); }
+.log__row--warn .log__text { color: var(--state-setup); }
+.log__row--error .log__text { color: #ffb9bc; }
+
+@media (max-width: 1360px) {
+  .kpi { padding-inline: var(--sp-2); }
+  .kpi__value { font-size: 16px; }
+}

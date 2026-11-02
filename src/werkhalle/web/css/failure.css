@@ -1,0 +1,74 @@
+/* Failure chain panel, docked under the view on every page. */
+.failure {
+  flex: none;
+  border-top: 2px solid var(--state-fault);
+  background: var(--surface-1);
+  padding: 6px var(--sp-3) var(--sp-2);
+  display: grid;
+  gap: 6px;
+}
+.failure--open { border-top-color: var(--state-setup); }
+.failure--accepted { border-top-color: var(--state-run); }
+.failure--superseded, .failure--expired, .failure--rejected { border-top-color: var(--line-3); }
+.failure--collapsed { padding-bottom: 6px; }
+
+.failure__head { display: flex; align-items: center; gap: var(--sp-2); min-height: 26px; flex-wrap: nowrap; min-width: 0; }
+.failure__title { font-size: var(--fs-md); font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.failure__title { flex: 0 2 auto; min-width: 120px; }
+.failure__meta { flex: 0 4 auto; }
+.failure__also { flex: 0 1 auto; }
+.failure__meta, .failure__also { min-width: 0; font-size: var(--fs-xs); color: var(--text-2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.failure__head .tag, .failure__head .btn { flex: none; }
+.failure__spacer { flex: 1; }
+.failure__pending { font-size: var(--fs-sm); color: var(--text-2); padding-left: 2px; }
+
+/* Stepper: fixed columns, so the chain reads as one line and values do not jump. */
+.chain { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(max-content, 1fr); gap: 0; }
+.step { position: relative; display: flex; align-items: flex-start; gap: 6px; padding-right: 22px; min-width: 0; }
+.step::after { content: ""; position: absolute; right: 9px; top: 4px; width: 7px; height: 7px; border-right: 1.5px solid var(--line-3); border-top: 1.5px solid var(--line-3); transform: rotate(45deg); }
+.step:last-child::after { display: none; }
+.step--done::after, .step--fault::after { border-color: var(--metal-2); }
+.step__mark { flex: none; }
+.step__text { display: grid; grid-template-columns: auto minmax(0, 1fr); column-gap: 8px; min-width: 0; align-items: baseline; }
+.step__label { grid-column: 1 / -1; font-size: var(--fs-sm); font-weight: 600; color: var(--text-1); line-height: 16px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.step__value { font-size: var(--fs-sm); color: var(--text-1); white-space: nowrap; }
+.step__sub { font-size: var(--fs-xs); color: var(--text-3); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.step--pending .step__label, .step--pending .step__value { color: var(--text-3); }
+.step--void .step__label, .step--void .step__value { color: var(--text-3); text-decoration: line-through; }
+.step--active .step__label { color: var(--accent); }
+.step__pulse { animation: step-pulse 1.2s ease-in-out infinite; }
+@keyframes step-pulse { 50% { opacity: .25; } }
+
+/* The table takes the width its figures need, the text gets what is left, and the gap is reserved: nothing can run under the buttons. */
+.failure__detail { display: grid; grid-template-columns: minmax(0, 1fr) auto auto; column-gap: var(--sp-4); row-gap: 4px; align-items: start; }
+.failure__notice { grid-column: 1 / -1; padding: 4px var(--sp-2); border-left: 3px solid var(--line-3); background: var(--surface-2); font-size: var(--fs-sm); }
+.failure__notice--warn { border-left-color: var(--state-setup); }
+.failure__text { display: grid; gap: 4px; align-content: start; min-width: 0; }
+.failure__summary { font-size: var(--fs-sm); color: var(--text-1); }
+.failure__summary--caveat { color: var(--state-setup); }
+.failure__solverNote { font-size: var(--fs-xs); }
+.failure__solvers { justify-self: start; }
+.failure__solver { font-family: var(--font-ui); padding: 0 var(--sp-2); white-space: nowrap; }
+.failure__solver:disabled { color: var(--text-3); cursor: not-allowed; text-decoration: line-through; }
+.failure__reco { font-size: var(--fs-xs); font-weight: 400; opacity: .9; }
+.failure__table { width: auto; border: 1px solid var(--line-1); }
+.failure__table th[scope="row"] { position: static; background: none; border-bottom: 1px solid var(--line-1); font-weight: 400; color: var(--text-1); }
+.failure__table td { font-family: var(--font-mono); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.failure__table td, .failure__table th { padding-block: 1px; }
+.failure__actions { display: grid; gap: var(--sp-1); }
+.delta { color: var(--text-2); }
+.delta--better { color: var(--text-1); font-weight: 600; }
+.delta--worse { color: var(--state-setup); }
+.delta__arrow { margin-right: 4px; vertical-align: 0; }
+
+@media (max-width: 1400px) {
+  .failure__detail { column-gap: var(--sp-3); }
+}
+/* Too narrow for three columns: the text goes above, table and stacked buttons stay side by side. */
+@media (max-width: 1100px) {
+  .failure__detail { grid-template-columns: minmax(0, 1fr) auto; }
+  .failure__text { grid-column: 1 / -1; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .step__pulse { animation: none; }
+}

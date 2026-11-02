@@ -1,0 +1,194 @@
+/* Reset, type, and the shared components every view uses. Documented in web/README.md. */
+*, *::before, *::after { box-sizing: border-box; }
+html, body { height: 100%; margin: 0; }
+body {
+  background: var(--surface-0);
+  color: var(--text-1);
+  font-family: var(--font-ui);
+  font-size: var(--fs-md);
+  line-height: 1.4;
+  overflow: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+h1, h2, h3, h4, p { margin: 0; }
+h1 { font-size: var(--fs-lg); font-weight: 600; }
+h2 { font-size: var(--fs-md); font-weight: 600; }
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+ul, ol { list-style: none; margin: 0; padding: 0; }
+button, input, select, textarea { font: inherit; color: inherit; }
+[hidden] { display: none !important; }
+
+:focus { outline: none; }
+:focus-visible { outline: 2px solid var(--focus); outline-offset: 1px; border-radius: 2px; }
+
+/* Values line up in columns */
+.num, .mono { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+.num { text-align: right; }
+.muted { color: var(--text-2); }
+.faint { color: var(--text-3); }
+.nowrap { white-space: nowrap; }
+
+/* Scrollbars stay quiet */
+* { scrollbar-width: thin; scrollbar-color: var(--line-2) transparent; }
+
+/* Panels: flat, hairline-bordered. No shadows, no cards in cards. */
+.panel {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  background: var(--surface-1);
+  border: 1px solid var(--line-1);
+  border-radius: var(--radius);
+}
+.panel__head {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  min-height: 28px;
+  padding: 0 var(--sp-3);
+  border-bottom: 1px solid var(--line-1);
+  flex: none;
+}
+.panel__title { font-size: var(--fs-sm); font-weight: 600; color: var(--text-2); }
+.panel__actions { margin-left: auto; display: flex; align-items: center; gap: var(--sp-2); }
+.panel__body { flex: 1 1 auto; min-height: 0; overflow: auto; padding: var(--sp-2) var(--sp-3); }
+.panel--dense .panel__body { padding: 0; }
+
+/* Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-height: 28px;
+  padding: 0 var(--sp-3);
+  background: var(--surface-2);
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius);
+  color: var(--text-1);
+  font-size: var(--fs-sm);
+  font-weight: 500;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.btn:hover:not(:disabled) { background: var(--surface-3); border-color: var(--line-3); text-decoration: none; }
+.btn:disabled { color: var(--text-3); cursor: not-allowed; border-color: var(--line-1); background: transparent; }
+.btn--primary { background: #2f4d63; border-color: #4a7492; }
+.btn--primary:hover:not(:disabled) { background: #38597a; border-color: #5e8aaa; }
+.btn--danger { color: #ffd5d6; border-color: #8a3136; background: #3a1a1d; }
+.btn--danger:hover:not(:disabled) { background: #4c1f23; border-color: #b23e44; }
+.btn--ghost { background: transparent; border-color: transparent; color: var(--text-2); }
+.btn--ghost:hover:not(:disabled) { color: var(--text-1); background: var(--surface-3); border-color: transparent; }
+.btn--sm { min-height: 22px; padding: 0 var(--sp-2); font-size: var(--fs-xs); }
+.btn--icon { width: 28px; padding: 0; }
+
+/* Form fields */
+.field { display: grid; gap: 3px; }
+.field__label { font-size: var(--fs-xs); color: var(--text-2); }
+.input, select.input {
+  min-height: 28px;
+  padding: 0 var(--sp-2);
+  background: var(--surface-0);
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius);
+  color: var(--text-1);
+  font-size: var(--fs-sm);
+  min-width: 0;
+  width: 100%;
+}
+select.input option { background: var(--surface-1); color: var(--text-1); }
+.input:hover { border-color: var(--line-3); }
+
+/* Segmented control */
+.seg { display: inline-flex; border: 1px solid var(--line-2); border-radius: var(--radius); overflow: hidden; }
+.seg__btn {
+  min-height: 26px;
+  min-width: 44px;
+  padding: 0 var(--sp-2);
+  background: transparent;
+  border: 0;
+  border-right: 1px solid var(--line-2);
+  color: var(--text-2);
+  font-size: var(--fs-sm);
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  cursor: pointer;
+}
+.seg__btn:last-child { border-right: 0; }
+.seg__btn:hover { color: var(--text-1); background: var(--surface-2); }
+.seg__btn[aria-pressed="true"] { color: var(--surface-0); background: var(--metal); font-weight: 600; }
+.seg__btn.is-pending { background: var(--metal-3); color: var(--text-1); }
+.seg__btn:focus-visible { outline-offset: -3px; }
+
+/* Switch */
+.switch { display: inline-flex; align-items: center; gap: 6px; padding: 2px 0; background: none; border: 0; color: var(--text-2); font-size: var(--fs-sm); cursor: pointer; white-space: nowrap; }
+.switch:hover { color: var(--text-1); }
+.switch__track { position: relative; width: 26px; height: 14px; border: 1px solid var(--line-3); border-radius: 2px; background: var(--surface-0); flex: none; }
+.switch__thumb { position: absolute; top: 2px; left: 2px; width: 8px; height: 8px; background: var(--text-3); }
+.switch[aria-checked="true"] { color: var(--text-1); }
+.switch[aria-checked="true"] .switch__track { background: var(--eq-3); }
+.switch[aria-checked="true"] .switch__thumb { left: 14px; background: var(--text-1); }
+.switch.is-pending .switch__thumb { background: var(--state-idle); }
+
+/* Status badge: shape, label, colour */
+.status-icon { flex: none; vertical-align: -1px; }
+.status-badge { display: inline-flex; align-items: center; gap: 5px; font-size: var(--fs-sm); font-weight: 600; white-space: nowrap; }
+
+/* Tags: small labels. State meaning only through tag--run and friends. */
+.tag { display: inline-flex; align-items: center; gap: 4px; padding: 0 5px; min-height: 17px; border: 1px solid var(--line-2); border-radius: 2px; font-size: var(--fs-xs); color: var(--text-2); white-space: nowrap; }
+.tag--mono { font-family: var(--font-mono); }
+.tag--run { color: var(--state-run); border-color: var(--state-run-dim); }
+.tag--setup { color: var(--state-setup); border-color: var(--state-setup-dim); }
+.tag--fault { color: #ffd5d6; background: var(--state-fault-dim); border-color: var(--state-fault); }
+
+/* Meter */
+.meter { display: inline-block; width: 100%; height: 6px; background: var(--surface-3); border-radius: 1px; overflow: hidden; vertical-align: middle; }
+.meter__fill { display: block; height: 100%; background: var(--metal-2); }
+.meter--run .meter__fill { background: var(--state-run); }
+.meter--setup .meter__fill { background: var(--state-setup); }
+.meter--fault .meter__fill { background: var(--state-fault); }
+
+/* Dense table */
+.tbl { width: 100%; border-collapse: collapse; font-size: var(--fs-sm); }
+.tbl th { position: sticky; top: 0; z-index: 1; padding: 4px var(--sp-2); background: var(--surface-2); border-bottom: 1px solid var(--line-2); color: var(--text-2); font-weight: 500; text-align: left; white-space: nowrap; }
+.tbl td { padding: 3px var(--sp-2); border-bottom: 1px solid var(--line-1); vertical-align: middle; }
+.tbl tbody tr:hover { background: var(--surface-2); }
+.tbl th.num, .tbl td.num { text-align: right; }
+.tbl tr.is-selected { background: var(--accent-dim); }
+
+/* Key-value grid */
+.kv { display: grid; grid-template-columns: auto 1fr; gap: 2px var(--sp-3); font-size: var(--fs-sm); }
+.kv dt { color: var(--text-2); }
+.kv dd { margin: 0; font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+
+.empty { color: var(--text-3); font-size: var(--fs-sm); padding: var(--sp-2) 0; }
+.panel--dense .empty { padding: var(--sp-2) var(--sp-3); }
+.toolbar { display: flex; align-items: center; gap: var(--sp-2); flex-wrap: wrap; }
+
+/* Sparklines */
+.spark { display: block; width: 100%; height: 100%; overflow: visible; }
+.spark__line { stroke: var(--metal); stroke-width: 1.5; stroke-linejoin: round; }
+.spark__ref { stroke: var(--text-3); stroke-width: 1; stroke-dasharray: 3 3; }
+.spark__dot { fill: var(--text-1); stroke: var(--surface-1); stroke-width: 1.5; }
+
+/* Toasts */
+/* Bottom right, above the failure panel and beside the drawer: the controls of every view sit at the top. */
+.toasts { position: fixed; right: var(--sp-3); bottom: calc(var(--failure-h, 0px) + var(--sp-3)); z-index: 60; display: grid; gap: var(--sp-2); width: min(420px, calc(100vw - 24px)); pointer-events: none; }
+.shell:has(.drawer:not([hidden])) ~ .toasts { right: calc(400px + var(--sp-3)); }
+.toast { display: flex; align-items: flex-start; gap: var(--sp-2); padding: 7px var(--sp-2) 7px var(--sp-3); background: var(--surface-3); border: 1px solid var(--line-3); border-left-width: 3px; border-radius: var(--radius); font-size: var(--fs-sm); pointer-events: auto; }
+.toast .status-icon { margin-top: 3px; }
+.toast__text { flex: 1; }
+.toast__close { background: none; border: 0; padding: 0 4px; color: var(--text-2); cursor: pointer; font-size: 15px; line-height: 1; }
+.toast__close:hover { color: var(--text-1); }
+.toast--ok { border-left-color: var(--state-run); }
+.toast--warn { border-left-color: var(--state-setup); }
+.toast--error { border-left-color: var(--state-fault); }
+
+/* Tooltip */
+.tooltip { position: fixed; z-index: 70; max-width: 320px; padding: 4px 8px; background: #05080b; border: 1px solid var(--line-3); border-radius: 2px; color: var(--text-1); font-size: var(--fs-sm); pointer-events: none; }
+
+/* A view that failed to load, and the stubs */
+.view-error, .view-stub { padding: var(--sp-4); display: grid; gap: var(--sp-2); }
+.view-error h1 { color: var(--state-fault); }
+.view-stub p { color: var(--text-2); }

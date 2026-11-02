@@ -1,0 +1,83 @@
+/* OPC UA: band with the link facts, filter row, node tree on the left, feed and method calls on the right. */
+.opcua { gap: 6px; padding: 6px var(--sp-2) var(--sp-2); overflow: hidden; }
+
+.opcua-band { flex: none; display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, .8fr) minmax(0, 1.05fr) minmax(0, .95fr) minmax(0, 1.05fr); background: var(--surface-1); border: 1px solid var(--line-1); border-radius: var(--radius); }
+.opcua-band__cell { margin: 0; padding: 4px var(--sp-3) 5px; border-right: 1px solid var(--line-1); min-width: 0; display: grid; grid-template-columns: minmax(0, 1fr); align-content: start; font-size: var(--fs-xs); }
+.opcua-band__cell:last-child { border-right: 0; }
+.opcua-band__cell dt, .opcua-band__label { color: var(--text-3); font-size: var(--fs-xs); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.opcua-band__cell dd { margin: 0 0 1px; color: var(--text-1); font-size: var(--fs-sm); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.opcua-band__link { display: flex; align-items: center; gap: 5px; font-family: var(--font-ui); font-weight: 600; }
+.opcua-band__rate { display: flex; align-items: center; gap: var(--sp-2); min-width: 0; }
+.opcua-band__big { font-size: 22px; font-weight: 600; line-height: 1.2; white-space: nowrap; }
+.opcua-band__spark { flex: 1 1 auto; min-width: 0; height: 26px; }
+
+.opcua-claim { flex: none; font-size: var(--fs-xs); color: var(--text-2); }
+.opcua-claim code { font-family: var(--font-mono); color: var(--text-1); }
+
+.opcua-toolbar { flex: none; gap: var(--sp-3); }
+.opcua-field { display: inline-flex; align-items: center; gap: 6px; }
+.opcua-select { width: auto; min-width: 96px; min-height: 24px; }
+.opcua-node-input { width: 190px; min-height: 24px; font-family: var(--font-mono); }
+
+/* A fault is the one thing here allowed to shout */
+.opcua-alerts { flex: none; display: flex; flex-wrap: wrap; gap: 6px; }
+.opcua-alert { display: inline-flex; align-items: center; gap: var(--sp-2); min-height: 26px; padding: 0 var(--sp-2); background: var(--state-fault-dim); border: 1px solid var(--state-fault); border-radius: var(--radius); color: #ffd5d6; font-size: var(--fs-sm); cursor: pointer; }
+.opcua-alert:hover { background: var(--state-fault-body); }
+.opcua-alert__ts { font-size: var(--fs-xs); color: #ffd5d6; }
+.opcua-alert__go { font-size: var(--fs-xs); text-decoration: underline; }
+
+.opcua-body { flex: 1 1 auto; min-height: 0; display: grid; grid-template-columns: minmax(0, 11fr) minmax(0, 9fr); gap: 6px; }
+.opcua-right { display: grid; grid-template-rows: minmax(0, 3fr) minmax(0, 2fr); gap: 6px; min-height: 0; min-width: 0; }
+.opcua-tree, .opcua-feed, .opcua-methods { min-height: 0; min-width: 0; }
+
+.opcua-table td { height: 21px; padding-block: 1px; }
+.opcua-table td.num { font-family: var(--font-mono); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.opcua-value { max-width: 124px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: var(--text-1); }
+.opcua-ts { color: var(--text-2); font-size: var(--fs-xs); }
+
+.opcua-group td { background: var(--surface-2); border-bottom-color: var(--line-2); }
+.opcua-group__toggle { display: inline-flex; align-items: center; gap: 6px; padding: 0; background: none; border: 0; color: var(--text-1); font-size: var(--fs-sm); cursor: pointer; white-space: nowrap; }
+.opcua-group__toggle .icon { flex: none; color: var(--text-2); transition: transform .1s; }
+.opcua-group__chevron--closed { transform: rotate(-90deg); }
+.opcua-group__id { font-weight: 700; }
+.opcua-group__nodes { font-size: var(--fs-xs); }
+.opcua-group__value { white-space: nowrap; }
+.opcua-group__value .status-icon { margin-right: 5px; }
+.opcua-group__status { font-weight: 600; font-size: var(--fs-xs); }
+.opcua-group.is-fault td { background: var(--state-fault-dim); }
+
+.opcua-node__name { white-space: nowrap; padding-left: 22px !important; }
+.opcua-node__prefix { display: none; color: var(--text-2); font-family: var(--font-mono); font-size: var(--fs-xs); }
+.is-flat .opcua-node__name { padding-left: var(--sp-2) !important; }
+.is-flat .opcua-node__prefix { display: inline; }
+.opcua-node__id { max-width: 196px; color: var(--text-3); font-size: var(--fs-xs); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.opcua-node__type { color: var(--text-3); font-size: var(--fs-xs); }
+
+.opcua-table tr.is-fault td { background: var(--state-fault-dim); color: #ffd5d6; font-weight: 600; }
+.opcua-table tr.is-fault .opcua-node__id, .opcua-table tr.is-fault .opcua-node__type, .opcua-table tr.is-fault .opcua-ts { color: #ffd5d6; }
+.opcua-table tr.is-status td { background: var(--surface-2); }
+.opcua-table tr.is-alarm .opcua-value { color: var(--state-setup); }
+
+/* Fixed columns: a long argument or node path gets an ellipsis instead of pushing the table out of its panel. */
+.opcua-feed .opcua-table, .opcua-methods .opcua-table { table-layout: fixed; }
+.opcua-feed .opcua-table td, .opcua-methods .opcua-table td { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.opcua-feed th:nth-child(1), .opcua-methods th:nth-child(1) { width: 110px; }
+.opcua-feed th:nth-child(3) { width: 96px; }
+.opcua-feed th:nth-child(4) { width: 100px; }
+.opcua-feed th:nth-child(5) { width: 64px; }
+.opcua-methods th:nth-child(2) { width: 132px; }
+.opcua-methods th:nth-child(3) { width: 58px; }
+.opcua-methods th:nth-child(5) { width: 96px; }
+.opcua-methods th:nth-child(6) { width: 64px; }
+.opcua-feed .opcua-value { max-width: none; }
+.opcua-feed__count { font-size: var(--fs-xs); color: var(--text-3); white-space: nowrap; }
+.opcua-method__cut { font-size: var(--fs-xs); }
+
+@media (max-width: 1360px) {
+  .opcua-node__id { max-width: 110px; }
+  .opcua-band__big { font-size: 18px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .opcua-group__toggle .icon { transition: none; }
+}

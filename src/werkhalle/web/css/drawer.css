@@ -1,0 +1,46 @@
+/* Machine drawer: a non-modal panel on the right. The hall stays visible and live behind it. */
+.drawer {
+  position: fixed;
+  top: var(--topbar-h);
+  right: 0;
+  bottom: var(--failure-h, 0px);
+  z-index: 40;
+  width: 400px;
+  max-width: calc(100vw - var(--rail-w));
+  display: flex;
+  flex-direction: column;
+  background: var(--surface-1);
+  border-left: 1px solid var(--line-3);
+  box-shadow: -12px 0 24px rgba(0, 0, 0, .35);
+}
+.drawer[data-tone="fault"] { border-left: 3px solid var(--state-fault); }
+.drawer__head { flex: none; display: grid; gap: 6px; padding: var(--sp-2) var(--sp-3); border-bottom: 1px solid var(--line-2); background: var(--surface-2); }
+.drawer__headRow { display: flex; align-items: center; gap: var(--sp-2); min-height: 24px; }
+.drawer__title { flex: 1; font-size: var(--fs-lg); font-weight: 600; }
+.drawer__body { flex: 1; min-height: 0; overflow: auto; padding-bottom: var(--sp-3); }
+.drawer__section { padding: var(--sp-2) var(--sp-3); border-bottom: 1px solid var(--line-1); display: grid; gap: 6px; }
+.drawer__heading { font-size: var(--fs-xs); font-weight: 600; color: var(--text-3); letter-spacing: .04em; text-transform: uppercase; }
+.drawer__valueRow { display: flex; align-items: baseline; gap: var(--sp-2); }
+.drawer__big { font-family: var(--font-mono); font-variant-numeric: tabular-nums; font-size: var(--fs-xl); font-weight: 600; }
+.drawer__spark { height: 44px; }
+.drawer__progress { display: grid; grid-template-columns: 1fr 48px; align-items: center; gap: var(--sp-2); }
+.drawer__progress .mono { text-align: right; font-size: var(--fs-sm); }
+.drawer .kv dd { min-width: 0; overflow-wrap: anywhere; }
+.drawer__factors { display: grid; grid-template-columns: auto 44px 1fr; align-items: center; gap: 3px var(--sp-2); margin: 0; font-size: var(--fs-sm); }
+.drawer__factors dt { color: var(--text-2); }
+.drawer__factors dd { margin: 0; text-align: right; font-family: var(--font-mono); }
+.drawer__note { font-size: var(--fs-xs); }
+.drawer__alarm:empty { display: none; }
+.drawer__alarm { display: flex; gap: var(--sp-2); padding: var(--sp-2) var(--sp-3); border-bottom: 1px solid var(--line-1); font-size: var(--fs-sm); }
+.drawer__alarm--fault { background: var(--state-fault-dim); color: #ffe3e4; }
+.drawer__alarm--warn { background: var(--state-setup-dim); color: #ffeac0; }
+.drawer__alarm .status-icon { margin-top: 2px; }
+.drawer__alarmSub { font-size: var(--fs-xs); opacity: .85; }
+.drawer__foot { flex: none; display: grid; gap: 6px; padding: var(--sp-2) var(--sp-3); border-top: 1px solid var(--line-2); background: var(--surface-2); }
+.drawer__fields { display: grid; grid-template-columns: minmax(0, 3fr) minmax(0, 2fr); gap: var(--sp-2); }
+.drawer__actions { display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp-2); }
+.drawer__command { min-height: 17px; font-size: var(--fs-sm); color: var(--text-1); }
+.drawer__command:focus-visible { outline: none; }
+.drawer__command--fault { color: #ffb9bc; }
+.drawer__command--warn { color: var(--state-setup); }
+.drawer__command--ok { color: var(--state-run); }

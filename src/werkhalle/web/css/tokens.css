@@ -1,0 +1,94 @@
+/* Design tokens. Every colour on screen comes from here. Colour is reserved for state and abnormal conditions (ISA-101):
+   equipment and normal operation stay low-chroma blue-grey. */
+:root {
+  color-scheme: dark;
+
+  /* Surfaces, darkest to lightest */
+  --surface-0: #11161b;
+  --surface-1: #171d23;
+  --surface-2: #1e252c;
+  --surface-3: #283039;
+  --line-1: #29313a;
+  --line-2: #3a444f;
+  --line-3: #55616d;
+
+  /* Text. All three pass 4.5:1 on surface-1. */
+  --text-1: #e4e9ee;
+  --text-2: #aeb9c3;
+  --text-3: #8894a0;
+
+  /* State colours. Never used for decoration. */
+  --state-run: #45bd9f;
+  --state-run-dim: #1b3b35;
+  --state-setup: #e5ae3f;
+  --state-setup-dim: #40331a;
+  --state-fault: #f4474c;
+  --state-fault-strong: #ff5a5f;
+  --state-fault-dim: #4c1a1e;
+  --state-fault-body: #6a1d22;
+  --state-idle: #8f9ba7;
+  --state-idle-dim: #2a323a;
+  --state-info: #83abcb;
+
+  /* Interaction */
+  --accent: #8fbbdd;
+  --accent-dim: #243543;
+  --focus: #b9d8f0;
+
+  /* Equipment drawing */
+  --eq-1: #7c8996;
+  --eq-2: #5a6672;
+  --eq-3: #434e59;
+  --eq-4: #313a43;
+  --eq-5: #252c33;
+  --eq-edge: #8c98a4;
+  --metal: #bcc6cf;
+  --metal-2: #8e99a4;
+  --metal-3: #66717c;
+  --melt: #f28b3a;
+  --melt-core: #ffc26b;
+  --melt-dim: #6f3a1d;
+  --hot: #e0863f;
+  --heat: #b5764a;
+
+  /* Hall floor */
+  --floor: #141a20;
+  --floor-grid: #1a2128;
+  --floor-zone: #182027;
+  --floor-mark: #333e49;
+  --wall: #303a44;
+  --wall-edge: #48545f;
+
+  /* Subtle lot tags: low chroma on purpose, they only help the eye follow one lot. */
+  --lot-0: #8ba4bb;
+  --lot-1: #a395bc;
+  --lot-2: #8fb09f;
+  --lot-3: #bba283;
+  --lot-4: #ad8fa0;
+  --lot-5: #94adb0;
+
+  /* Type */
+  --font-ui: "Segoe UI Variable", "Segoe UI", system-ui, sans-serif;
+  --font-mono: "Cascadia Mono", "Consolas", monospace;
+  --fs-xs: 11px;
+  --fs-sm: 12px;
+  --fs-md: 13px;
+  --fs-lg: 15px;
+  --fs-xl: 20px;
+
+  /* Spacing and radii */
+  --sp-1: 4px;
+  --sp-2: 8px;
+  --sp-3: 12px;
+  --sp-4: 16px;
+  --radius: 3px;
+
+  --topbar-h: 46px;
+  --rail-w: 92px;
+}
+
+.tone-run { color: var(--state-run); }
+.tone-setup { color: var(--state-setup); }
+.tone-fault { color: var(--state-fault); }
+.tone-idle { color: var(--state-idle); }
+.tone-info { color: var(--state-info); }

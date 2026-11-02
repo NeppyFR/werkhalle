@@ -1,0 +1,58 @@
+/* Aufträge: order table on the left, new-order form on the right. The table scrolls, the view does not. */
+.view.auftraege { display: grid; grid-template-columns: minmax(0, 1fr) 292px; grid-template-rows: minmax(0, 1fr); gap: 6px; padding: 6px var(--sp-2) var(--sp-2); overflow: hidden; }
+.auftraege > .panel { min-height: 0; min-width: 0; }
+.auftraege__side { min-height: 0; overflow: auto; }
+.auftraege__seg .seg__btn { font-family: var(--font-ui); min-height: 22px; font-size: var(--fs-xs); }
+.auftraege__count { font-family: var(--font-mono); opacity: .8; }
+
+.auftraege-tbl td { white-space: nowrap; }
+.auftraege__row { cursor: pointer; }
+.auftraege__row.is-open td { border-bottom-color: transparent; background: var(--surface-2); }
+.auftraege-tbl tr.is-selected td { background: var(--accent-dim); }
+.auftraege__idcell { display: inline-flex; align-items: center; gap: 5px; }
+.auftraege__id { font-weight: 600; color: var(--text-1); }
+.auftraege__toggle { display: inline-flex; align-items: center; justify-content: center; width: 20px; height: 20px; padding: 0; background: none; border: 0; color: var(--text-2); cursor: pointer; }
+.auftraege__toggle:hover { color: var(--text-1); background: var(--surface-3); }
+.auftraege__toggle .icon { transform: rotate(-90deg); }
+.auftraege__toggle[aria-expanded="true"] .icon { transform: none; }
+.auftraege__status { display: inline-flex; align-items: center; gap: 5px; }
+.auftraege__product { max-width: 190px; overflow: hidden; text-overflow: ellipsis; }
+.auftraege-tbl td.num { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+.auftraege__late { color: var(--state-setup); font-weight: 600; }
+.auftraege__late .status-icon { margin-right: 4px; }
+.auftraege__progress { display: grid; grid-template-columns: minmax(36px, 1fr) auto; align-items: center; gap: 6px; min-width: 76px; }
+.auftraege__lots { font-size: var(--fs-xs); color: var(--text-2); }
+.auftraege__links { white-space: nowrap; text-align: right; padding-inline: 2px !important; }
+.auftraege__links .btn { min-height: 20px; width: 22px; }
+
+/* Lots of an expanded order */
+.auftraege__detail > td { padding: 0 var(--sp-2) 5px 30px; background: var(--surface-2); }
+.auftraege-lot { display: grid; grid-template-columns: 70px 64px auto minmax(0, 1fr) auto; align-items: center; gap: var(--sp-2); min-height: 22px; font-size: var(--fs-xs); border-top: 1px solid var(--line-1); }
+.auftraege-lot__id { color: var(--text-1); }
+.auftraege-lot__billets { color: var(--text-2); }
+.auftraege-lot__stages { display: inline-flex; gap: 2px; }
+.auftraege-lot__summary { color: var(--text-2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.auftraege-stage { display: inline-flex; align-items: center; gap: 3px; padding: 0 5px; min-height: 17px; border: 1px solid var(--line-1); border-radius: 2px; color: var(--text-3); white-space: nowrap; }
+.auftraege-stage--future .status-icon { color: var(--line-3); }
+.auftraege-stage--waiting { color: var(--text-1); border-color: var(--line-3); }
+.auftraege-stage--waiting .status-icon { color: var(--text-2); }
+.auftraege-stage--running { color: var(--text-1); border-color: var(--state-run); background: var(--state-run-dim); }
+.auftraege-stage--done { color: var(--text-2); background: var(--surface-3); border-color: var(--surface-3); }
+.auftraege-stage--done .status-icon { color: var(--text-2); }
+
+/* New order */
+.auftraege-form { display: grid; gap: var(--sp-2); }
+.auftraege-form__info { font-size: var(--fs-xs); color: var(--text-2); margin-top: -4px; min-height: 15px; }
+.auftraege-form__check { display: flex; align-items: center; gap: 6px; font-size: var(--fs-sm); cursor: pointer; }
+.auftraege-form__check input { width: 14px; height: 14px; margin: 0; accent-color: var(--metal); }
+.auftraege-form__note, .auftraege-form__error { display: grid; grid-template-columns: 12px minmax(0, 1fr); gap: 2px 6px; padding: 4px 6px; font-size: var(--fs-xs); border-left: 3px solid var(--state-setup); background: var(--surface-2); }
+.auftraege-form__note .status-icon, .auftraege-form__error .status-icon { margin-top: 2px; }
+.auftraege-form__note .btn, .auftraege-form__error .btn { grid-column: 2; justify-self: start; margin-top: 2px; }
+.auftraege-form__error { border-left-color: var(--state-fault); background: var(--state-fault-dim); }
+.auftraege-form .btn--primary { justify-self: start; }
+
+@media (max-width: 1360px) {
+  .view.auftraege { grid-template-columns: minmax(0, 1fr) 248px; }
+  .auftraege__product { max-width: 130px; }
+  .auftraege-tbl th, .auftraege-tbl td { padding-inline: 5px; }
+}

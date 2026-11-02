@@ -1,0 +1,41 @@
+/* Alarme: filters, active alarms on top, history, event log. Red only for an active fault. */
+.alarme { gap: 6px; padding: 6px var(--sp-2) var(--sp-2); overflow: hidden; }
+.alarme-toolbar { flex: none; gap: var(--sp-3); }
+.alarme-field { display: inline-flex; align-items: center; gap: 6px; }
+.alarme-select { width: auto; min-width: 96px; min-height: 24px; }
+.alarme-counts { margin-left: auto; font-size: var(--fs-xs); color: var(--text-2); }
+
+.alarme-active { flex: 0 1 auto; max-height: 34%; min-height: 76px; }
+.alarme-history { flex: 1 1 30%; min-height: 110px; }
+.alarme-logbox { flex: 1 1 34%; min-height: 110px; }
+.alarme-logbox .panel__head { min-height: 32px; }
+
+.alarme-table td { height: 27px; padding-block: 2px; }
+.alarme-log td { height: 22px; padding-block: 1px; }
+.alarme-table td.mono { white-space: nowrap; }
+.alarme-table .num { font-family: var(--font-mono); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.alarme-table td.num { color: var(--text-1); }
+.alarme-text { width: 100%; }
+.alarme-severity { white-space: nowrap; }
+.alarme-severity .status-icon, .alarme-log__level .status-icon, .alarme-acked .status-icon { margin-right: 5px; }
+.alarme-acked { white-space: nowrap; color: var(--text-2); }
+
+.alarme-row--fault td { background: var(--state-fault-dim); color: #ffd5d6; }
+.alarme-row--fault td.num { color: #ffd5d6; }
+/* Acknowledged but still there: the state stays visible, the shouting stops. */
+.alarme-row--fault-acked td { background: var(--surface-2); }
+.alarme-row--fault-acked td:first-child { box-shadow: inset 3px 0 0 var(--state-fault); }
+.alarme-row.is-new td { animation: alarme-new 1.6s ease-out; }
+@keyframes alarme-new {
+  from { background: var(--state-setup-dim); }
+}
+
+.alarme-log { font-size: var(--fs-sm); }
+.alarme-log td:last-child { width: 100%; }
+.alarme-log__level { white-space: nowrap; color: var(--text-2); }
+.alarme-log__row--warn td:last-child { color: var(--state-setup); }
+.alarme-log__row--error td:last-child { color: #ffb9bc; }
+
+@media (prefers-reduced-motion: reduce) {
+  .alarme-row.is-new td { animation: none; }
+}

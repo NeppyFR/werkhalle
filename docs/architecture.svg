@@ -1,0 +1,144 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 700" role="img" aria-labelledby="t d" font-family="Segoe UI, Helvetica, Arial, sans-serif">
+  <title id="t">Werkhalle architecture</title>
+  <desc id="d">Two operating-system processes, the plant and the MES, connected only by OPC UA. The browser talks to the MES over REST and WebSocket. The twin runs the same simulation code as the plant, forked from a snapshot read over OPC UA.</desc>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 10 5 0 10z" fill="#33414f"/></marker>
+    <marker id="o" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 10 5 0 10z" fill="#0b7a6b"/></marker>
+    <style>
+      .proc{fill:#f3f5f7;stroke:#7b8a99;stroke-width:1.5}
+      .box{fill:#fff;stroke:#7b8a99;stroke-width:1.2}
+      .pool{fill:#e9eef3;stroke:#7b8a99;stroke-width:1.2;stroke-dasharray:5 3}
+      .h{font-size:17px;font-weight:600;fill:#1b2733}
+      .b{font-size:14px;font-weight:600;fill:#1b2733}
+      .s{font-size:12.5px;fill:#46556a}
+      .l{stroke:#33414f;stroke-width:1.5;fill:none}
+      .o{stroke:#0b7a6b;stroke-width:2.2;fill:none}
+      .ot{font-size:12.5px;fill:#0b5f53}
+      .oh{font-size:14px;font-weight:600;fill:#0b5f53}
+    </style>
+  </defs>
+  <rect width="1200" height="700" fill="#fff"/>
+
+  <!-- Launcher -->
+  <text class="s" x="20" y="34">start.cmd → python -m werkhalle: finds free ports, starts both processes, waits for /api/health, opens the browser.</text>
+
+  <!-- Plant process -->
+  <rect class="proc" x="20" y="60" width="270" height="480" rx="8"/>
+  <text class="h" x="36" y="88">Process 1: Plant</text>
+  <text class="s" x="36" y="107">python -m werkhalle.plant</text>
+  <rect class="box" x="40" y="128" width="230" height="146" rx="5"/>
+  <text class="b" x="54" y="152">simcore.SimEngine</text>
+  <text class="s" x="54" y="174">Casting, 2 presses, 2 furnaces,</text>
+  <text class="s" x="54" y="192">saw, packaging</text>
+  <text class="s" x="54" y="214">Cycle and setup times, random</text>
+  <text class="s" x="54" y="232">failures, temperature, energy, scrap</text>
+  <text class="s" x="54" y="254">Assigns all batch IDs</text>
+  <path class="l" d="M155 274V340" marker-start="url(#a)" marker-end="url(#a)"/>
+  <rect class="box" x="40" y="340" width="230" height="176" rx="5"/>
+  <text class="b" x="54" y="364">plant.server (asyncua)</text>
+  <text class="s" x="54" y="386">Address space Werkhalle/</text>
+  <text class="s" x="54" y="406">  Plant: SimTime, Material, …</text>
+  <text class="s" x="54" y="426">  Machines/&lt;ID&gt;: Status,</text>
+  <text class="s" x="54" y="446">    Temperature, Counts, Alarm*</text>
+  <text class="s" x="54" y="470">50 ms tick, status at once,</text>
+  <text class="s" x="54" y="490">slow signals at about 2 Hz</text>
+
+  <!-- OPC UA link -->
+  <text class="oh" x="300" y="130">OPC UA</text>
+  <text class="ot" x="300" y="148">the only connection</text>
+  <text class="ot" x="300" y="166">opc.tcp://127.0.0.1:4840</text>
+  <text class="ot" x="300" y="312">DataChange: Status,</text>
+  <text class="ot" x="300" y="329">Alarm*, counters, …</text>
+  <path class="o" d="M270 345H442" marker-end="url(#o)"/>
+  <text class="ot" x="300" y="383">StartOperation, Repair,</text>
+  <text class="ot" x="300" y="400">InjectFault, AckAlarm</text>
+  <path class="o" d="M442 415H270" marker-end="url(#o)"/>
+  <text class="ot" x="300" y="451">GetEvents (trace),</text>
+  <text class="ot" x="300" y="468">GetStateSnapshot (fork)</text>
+  <path class="o" d="M442 483H270" marker-end="url(#o)"/>
+
+  <!-- MES process -->
+  <rect class="proc" x="442" y="60" width="536" height="620" rx="8"/>
+  <text class="h" x="458" y="88">Process 2: MES</text>
+  <text class="s" x="458" y="107">python -m werkhalle.mes</text>
+
+  <rect class="box" x="460" y="124" width="158" height="92" rx="5"/>
+  <text class="b" x="472" y="148">opcua_client</text>
+  <text class="s" x="472" y="170">Browse, subscription,</text>
+  <text class="s" x="472" y="188">trace pump, reconnect</text>
+
+  <rect class="box" x="632" y="124" width="158" height="92" rx="5"/>
+  <text class="b" x="644" y="148">Shadow</text>
+  <text class="s" x="644" y="170">Digital shadow:</text>
+  <text class="s" x="644" y="188">mirrors, read-only</text>
+
+  <rect class="box" x="804" y="124" width="158" height="92" rx="5"/>
+  <text class="b" x="816" y="148">FastAPI</text>
+  <text class="s" x="816" y="170">REST, WebSocket,</text>
+  <text class="s" x="816" y="188">static web UI</text>
+  <path class="l" d="M618 170H632" marker-end="url(#a)"/>
+  <path class="l" d="M790 170H804" marker-end="url(#a)"/>
+
+  <rect class="box" x="460" y="240" width="158" height="92" rx="5"/>
+  <text class="b" x="472" y="264">Tracker, Dispatcher</text>
+  <text class="s" x="472" y="286">Execute the</text>
+  <text class="s" x="472" y="304">active plan</text>
+
+  <rect class="box" x="632" y="240" width="158" height="92" rx="5"/>
+  <text class="b" x="644" y="264">OEE, energy, alarms</text>
+  <text class="s" x="644" y="286">From OPC UA counters,</text>
+  <text class="s" x="644" y="304">net and ISO 22400</text>
+
+  <rect class="box" x="804" y="240" width="158" height="92" rx="5"/>
+  <text class="b" x="816" y="264">Genealogy</text>
+  <text class="s" x="816" y="286">SQLite: melt to package,</text>
+  <text class="s" x="816" y="304">with quantities</text>
+
+  <rect class="box" x="460" y="358" width="502" height="70" rx="5"/>
+  <text class="b" x="472" y="382">Runtime</text>
+  <text class="s" x="472" y="404">Order book, plan lifecycle, failure chain, proposals, validation before every apply</text>
+  <path class="l" d="M539 332V358" marker-start="url(#a)" marker-end="url(#a)"/>
+  <path class="l" d="M711 332V358" marker-start="url(#a)"/>
+  <path class="l" d="M883 332V358" marker-start="url(#a)"/>
+  <path class="l" d="M711 216V240"/>
+
+  <rect class="pool" x="460" y="456" width="240" height="124" rx="5"/>
+  <text class="b" x="472" y="480">Process pool: re-planning</text>
+  <text class="s" x="472" y="502">scheduling: CP-SAT and</text>
+  <text class="s" x="472" y="520">simulated annealing, retime,</text>
+  <text class="s" x="472" y="538">independent validator,</text>
+  <text class="s" x="472" y="556">metrics</text>
+
+  <rect class="pool" x="722" y="456" width="240" height="124" rx="5"/>
+  <text class="b" x="734" y="480">Process pool: twin</text>
+  <text class="s" x="734" y="502">Same simcore code, forked from</text>
+  <text class="s" x="734" y="520">the OPC UA snapshot, runs faster</text>
+  <text class="s" x="734" y="538">than real time. Scenarios,</text>
+  <text class="s" x="734" y="556">Monte Carlo</text>
+  <path class="l" d="M580 428V456" marker-start="url(#a)" marker-end="url(#a)"/>
+  <path class="l" d="M842 428V456" marker-start="url(#a)" marker-end="url(#a)"/>
+  <path class="l" d="M700 518H722" marker-start="url(#a)" marker-end="url(#a)"/>
+
+  <text class="s" x="460" y="612">The architecture test walks the import graph: werkhalle.plant is unreachable from mes,</text>
+  <text class="s" x="460" y="632">execution, scheduling and simcore. /api/health also reports it at runtime, including</text>
+  <text class="s" x="460" y="652">for the pool workers.</text>
+
+  <!-- Browser -->
+  <rect class="proc" x="1004" y="110" width="176" height="212" rx="8"/>
+  <text class="h" x="1018" y="138">Browser UI</text>
+  <text class="s" x="1018" y="164">Leitstand</text>
+  <text class="s" x="1018" y="184">Aufträge</text>
+  <text class="s" x="1018" y="204">Planung</text>
+  <text class="s" x="1018" y="224">Rückverfolgung</text>
+  <text class="s" x="1018" y="244">Zwilling</text>
+  <text class="s" x="1018" y="264">OEE &amp; Energie</text>
+  <text class="s" x="1018" y="284">Alarme, OPC UA</text>
+  <path class="l" d="M962 170H1004" marker-start="url(#a)" marker-end="url(#a)"/>
+
+  <!-- Shared code -->
+  <rect class="box" x="20" y="566" width="396" height="114" rx="5"/>
+  <text class="b" x="34" y="590">Shared code, no shared memory</text>
+  <text class="s" x="34" y="612">domain: catalogue, orders, lots, setup rules</text>
+  <text class="s" x="34" y="632">simcore: plant model, used by plant and twin</text>
+  <text class="s" x="34" y="652">execution: tracker and dispatcher, used by MES and twin</text>
+</svg>
